@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('../layout/header.ejs'); -%>
+  <title>Quần áo mới</title>
+</head>
+<body>
+    <div class="container">
+        <h1><%= product.title %></h1>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="main-image-container">
+                    <img src="https://static.salekit.com/image/site/1576/blogs/cach-chup-hinh-quan-ao-dep.jpg" alt="Sản phẩm ABC" class="main-image" id="mainImage">
+                </div>
+                <!-- <img src="https://static.salekit.com/image/site/1576/blogs/cach-chup-hinh-quan-ao-dep.jpg" alt="Sản phẩm ABC" class="img-fluid" id="mainImage"> -->
+                <div class="small-images">
+                  <img src="https://blog.dktcdn.net/files/cach-chup-san-pham-quan-ao-ban-hang-3.jpg" alt="Sản phẩm ABC" class="small-image" onclick="changeImages('product-image-1.jpg', this)">
+                  <img src="https://nhatminhdecor.com/wp-content/uploads/2019/01/chup-anh-voi-phong-nen-vai-trang-1.jpg" alt="Sản phẩm ABC" class="small-image" onclick="changeImages('product-image-2.jpg', this)">
+                  <!-- <img src="product-image-3.jpg" alt="Sản phẩm ABC" class="small-image" onclick="changeImages('product-image-3.jpg', this)"> -->
+                </div>
+              </div>
+          <div class="col-md-6">
+            <form id="productForm" action="/buyNow" method="POST">
+            <h3>Thông tin sản phẩm: <%= product.title %></h3>
+            <p>Mô tả sản phẩm <%= product.title %>: <%= product.description %></p>
+            <p>Giá: <%= product.price %> đ</p>
+            
+            <div class="form-group">
+              <label for="sizeSelect">Chọn kích thước:</label>
+              <% for(var i=0; i < size.length; i++) { %>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="size" value="<%= size[i] %>" checked>
+                <label class="form-check-label" for="sizeS">
+                  <%= size[i] %>
+                </label>
+              </div>
+              <% } %>
+            </div>
+    
+            <div class="form-group">
+                <label for="colorSelect">Chọn màu sắc:</label>
+                <% for(var i=0; i < color.length; i++) { %>
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="color" id="colorRed" value="<%= color[i] %>" checked>
+                    <label class="form-check-label" for="colorRed">
+                      <%= color[i] %>
+                    </label>
+                  </div>
+                <% } %>
+
+              </div>
+
+              <div class="form-group">
+                <label for="quantity">Số lượng:</label>
+                <div class="input-group">
+                  <button class="btn btn-outline-secondary" type="button" id="decreaseQuantity">-</button>
+                  <input id="quantityValue" name="quantityvalue" class="quantity-value" type="text" value="1">
+                  <button class="btn btn-outline-secondary" type="button" id="increaseQuantity">+</button>
+                </div>
+              </div>
+              <input type="hidden" name="productID" value="<%= product.productID %>">
+              <input type="hidden" name="price" value="<%= product.price %>">
+              <input type="hidden" name="id" value="<%= product.id %>">
+
+      
+              <div class="d-grid gap-2">
+                <button class="btn btn-primary" id="cartadd" type="submit">Thêm vào giỏ hàng</button>
+                <% if(user===undefined) { %>
+                <button class="btn btn-success" id="buy-now" type="button">Mua ngay</button>
+                <% }else{ %>
+                <button class="btn btn-success" type="submit">Mua ngay</button>
+                <% }%>
+              </div>
+            </form>
+            <form action="/buyNow" method="POST">
+              <div id="text-buy-now" >Bạn cần đăng nhập trước khi mua hàng. <button class="btn btn-primary" type="submit">Đăng nhập</button></div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      
+    <%- include('../layout/script.ejs'); -%>
+    <script>
+
+
+      document.addEventListener('DOMContentLoaded', function() {
+        var decreaseButton = document.getElementById('decreaseQuantity');
+        var increaseButton = document.getElementById('increaseQuantity');
+        var quantityValue = document.getElementById('quantityValue');
+      
+        decreaseButton.addEventListener('click', function() {
+          var currentValue = parseInt(quantityValue.value);
+          console.log(currentValue)
+          if (currentValue > 1) {
+            quantityValue.value = (currentValue - 1).toString();
+          }
+        });
+      
+        increaseButton.addEventListener('click', function() {
+          var currentValue = parseInt(quantityValue.value);
+          console.log(currentValue)
+          quantityValue.value = (currentValue + 1).toString();
+        });
+      });
+
+      document.getElementById("cartadd").onclick = function(e){
+        e.preventDefault()
+        document.getElementById("productForm").action = '/cartAdd'
+        document.getElementById("productForm").submit()
+      }
+
+
+
+
+      var buyNow = document.getElementById("buy-now");
+      var textBuyNow = document.getElementById("text-buy-now");
+      var buyLoign = document.getElementById("buy-login");
+      textBuyNow.style.display = "none";
+      buyNow.onclick = function() {
+        textBuyNow.style.display = "block";
+      }
+      buyLoign.onclick = function() {
+        textBuyNow.style.display = "none";
+      }
+
+
+
+
+      
+
+        function changeImages(imageUrl, clickedImage) {
+            var mainImage = document.getElementById('mainImage');
+        
+            // Lưu trữ URL hiện tại của hình ảnh lớn
+            var currentMainImage = mainImage.src;
+        
+            // Lấy URL của hình ảnh nhỏ đã được click
+            var clickedImageUrl = clickedImage.src;
+        
+            // Thay đổi hình ảnh lớn thành hình ảnh nhỏ đã click
+            mainImage.src = clickedImageUrl;
+        
+            // Thay đổi hình ảnh nhỏ đã click thành hình ảnh lớn trước đó
+            clickedImage.src = currentMainImage;
+          }
+      </script>
+</body>
+</html>

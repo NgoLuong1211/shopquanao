@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <%- include('../layout/header.ejs'); -%>
+    <title>Giỏ hàng</title>
+</head>
+
+<body>
+
+  <!-- Header -->
+  <%- include('../layout/navbar.ejs'); -%>
+
+    <!-- Content -->
+    <h1>Giỏ Hàng</h1>
+    <% if(!carts) { %>
+      <div>Hiện tại giỏ hàng của bạn đang trống. Bạn có thể thêm sản phẩm <a href="/product">tại đây</a></div>
+    <% }else{ %>
+    <div class="container mt-5">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Tên sản phẩm</th>
+            <th>Giá</th>
+            <th>Số lượng</th>
+            <th>Tổng tiền</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Dữ liệu sản phẩm trong giỏ hàng -->
+              <% for(var i=0; i < carts.length; i++) { %>
+                <tr>
+                  <td>
+                    <%= carts[i].title %>
+                  </td>
+                  <td>
+                    <%= carts[i].price %>
+                  </td>
+                  <td>
+                    <div id="container">
+                    <button class="btn btn-sm btn-secondary decrease-btn" data-id="<%= carts[i]._id %>">-</button>
+                    <span class="quantity">
+                      <%= carts[i].quantityCart %>
+                    </span>
+                    <button class="btn btn-sm btn-secondary increase-btn" data-id="<%= carts[i]._id %>">+</button>
+                  </td>
+                </div>
+                  <td class="total">
+                    <%= carts[i].price*carts[i].quantityCart %>
+                  </td>
+                </tr>
+                <% } %>
+        </tbody>
+      </table>
+      <div class="text-right">
+        <h3 id="totalAmount">Tổng hóa đơn: 10$</h3>
+        <!-- Nút Checkout -->
+        <form action="/buyCart" method="POST">
+          <div class="d-grid gap-2">
+            <% if(user===undefined) { %>
+              <button class="btn btn-primary" id="buy-cart" type="button">Nhập thông tin</button>
+              <% }else{ %>
+                <button class="btn btn-primary" type="submit">Nhập thông tin</button>
+                <% }%>
+          </div>
+          <div id="text-buy-cart">Bạn cần đăng nhập trước khi nhập thông tin. <button class="btn btn-primary"
+              type="submit">Đăng nhập</button></div>
+        </form>
+      </div>
+    </div>
+    <% }%>
+    <!-- script ajax -->
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- Liên kết với Bootstrap JavaScript và JavaScript tùy chỉnh -->
+    <%- include('../layout/script.ejs'); -%>
+      <script>
+
+        const containers = document.querySelectorAll("#container");
+        const total = document.querySelector('.total');
+
+
+
+
+        function updateQuantity(productID, newQuantity) {
+          $.ajax({
+            url: `/updateCart/${productID}`,
+            method: 'PUT',
+            data: { quantity: newQuantity },
+            success: function (response) {
+              console.log('Số lượng sản phẩm đã được cập nhật thành công.');
+              // Gọi hàm renderUI() để cập nhật giao diện
+              renderUI();
+            },
+            error: function (xhr, status, error) {
+              console.log('Có lỗi xảy ra khi cập nhật số lượng sản phẩm: ' + error);
+              // TODO: Xử lý hiển thị thông báo lỗi tại đây
+            }
+          });
+        }
+
+        // ...
+
+        function renderUI() {
+          $.ajax({
+            url: '/carts',
+            type: 'GET',
+            success: function (carts) {
+              console.log(carts);
+              carts.forEach(function (cart, index) {
+                // Tìm phần tử span tương ứng
+                var quantityElement = $('.quantity').eq(index);
+                var totalElement = $('.total').eq(index);
+
+                // Cập nhật nội dung phần tử span
+                quantityElement.text(cart.quantityCart);
+                totalElement.text(cart.price * cart.quantityCart);
+              });
+            },
+            error: function (xhr, status, error) {
+              console.log('Lỗi:', error);
+            }
+          });
+        }
+
+        // ...
+
+        containers.forEach((container) => {
+          // Lấy các phần tử con bên trong phần tử cha
+          const decreaseBtn = container.querySelector(".decrease-btn");
+          const increaseBtn = container.querySelector(".increase-btn");
+          const quantity = container.querySelector(".quantity");
+        // Xử lý sự kiện click cho nút "Trừ sản phẩm"
+        decreaseBtn.addEventListener("click", (e) => {
+          const button = e.target;
+            const id = button.getAttribute('data-id');
+            let currentQuantity = parseInt(quantity.textContent);
+            if (currentQuantity > 1) {
+              currentQuantity--;
+              if (currentQuantity === 1) {
+                currentQuantity =1
+              }
+            }
+            updateQuantity(id, currentQuantity);
+        });
+
+        // Xử lý sự kiện click cho nút "Thêm sản phẩm"
+        increaseBtn.addEventListener("click", (e) => {
+          const button = e.target;
+            const id = button.getAttribute('data-id');
+            let currentQuantity = parseInt(quantity.textContent);
+            currentQuantity++;
+            updateQuantity(id, currentQuantity);
+        });
+
+      });
+
+
+        var buyCart = document.getElementById("buy-cart");
+        var textBuyCart = document.getElementById("text-buy-cart");
+        var buyLoign = document.getElementById("buy-login");
+        textBuyCart.style.display = "none";
+        if (buyCart) {
+          buyCart.onclick = function () {
+            textBuyCart.style.display = "block";
+          }
+        }
+        if (buyLoign) {
+          buyLoign.onclick = function () {
+            textBuyCart.style.display = "none";
+          }
+        }
+
+
+
+      </script>
+</body>
+
+</html>

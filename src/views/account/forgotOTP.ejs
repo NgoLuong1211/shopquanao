@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('../layout/header.ejs'); -%>
+</head>
+<body>
+    <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-md-6">
+            <form action="/account/forgotveryfyOtp" method="POST">
+              <h2>Nhập OTP</h2>
+              <div class="form-group">
+                <label for="otp">OTP:</label>
+                <input type="text" class="form-control" id="otp" name="otp" required>
+                <label for="expired">OTP sẽ hết hạn sau 1 phút</label>
+              </div>
+              <button type="submit" name="email" value="<%= email %>" class="btn btn-primary">Tiếp tục</button>
+            </form>
+            <form action="/account/resendOtp" method="POST">
+              <button type="submit" name="email" value="<%= email %>" class="btn btn-primary">Gửi lại OTP</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    <%- include('../layout/script.ejs'); -%>
+</body>
+</html>

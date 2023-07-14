@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('../layout/header.ejs'); -%>
+  <title>Quần áo mới</title>
+</head>
+<body>
+
+  <!-- Header -->
+  <%- include('../layout/navbarServer.ejs'); -%>
+
+  <div class="col-8 offset-2 my-5">
+    <div class="card">
+      <div class="card-body">
+        <h5>Doanh thu</h5>
+        <hr>
+        <canvas id="myChart"></canvas>
+      </div>
+    </div>
+  </div>
+  
+  
+  
+  <!-- Liên kết với Bootstrap JavaScript -->
+  <%- include('../layout/script.ejs'); -%>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    fetch('/server/revenues')
+      .then(response => response.json())
+      .then(data => {
+        const ctx = document.getElementById('myChart').getContext('2d');
+    
+        new Chart(ctx, {
+          type: 'bar',
+          data: {
+            labels: data.labels,
+            datasets: [{
+              label: 'Doanh thu',
+              data: data.amount,
+              backgroundColor: 'rgba(75, 192, 192, 0.6)'
+            }]
+          },
+          options: {
+            responsive: true,
+            scales: {
+              y: {
+                beginAtZero: true
+              }
+            }
+          }
+        });
+      });
+    </script>
+    
+</body>
+</html>

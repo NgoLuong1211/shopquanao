@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Chi tiết sản phẩm</title>
+    <%- include('../layout/header.ejs'); -%>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Sản phẩm</h1>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>STT</th>
+                    <th>Size</th>
+                    <th>Màu</th>
+                    <th>Số lượng</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Dùng vòng lặp để hiển thị thông tin từng đơn hàng -->
+                <% product.forEach(function(item, index) { %>
+                    <tr>
+                        <td>
+                            <%= index + 1 %>
+                        </td>
+                        <td>
+                            <%= item.size %>
+                        </td>
+                        <td>
+                            <%= item.couleur %>
+                        </td>
+                        <td>
+                            <%= item.quantity %>
+                        </td>
+                        <td><a class="btn btn-danger btn-delete" type="button" data-bs-toggle="modal"
+                                data-id="<%= item.id %>" data-bs-target="#delete">Xóa</a></td>
+                        <td><a href="/server/updateProductQuantity/<%= item._id %>" class="btn btn-info">Sửa</a></td>
+                    </tr>
+                    <% }); %>
+            </tbody>
+        </table>
+    </div>
+    <form name="delete-form" method="POST"></form>
+
+    <script>
+        var deleteForm = document.forms['delete-form'];
+        var btndeletes = document.querySelectorAll('.btn-delete');
+        btndeletes.forEach(function(item, index){
+            item.onclick = function(e){
+                e.preventDefault();
+                var id = this.getAttribute('data-id');
+                deleteForm.action = '/server/deleteProduct/' +  id + '?_method=DELETE';
+                deleteForm.submit();
+              }
+        })
+    </script>
+
+    <%- include('../layout/script.ejs'); -%>
+
+</body>
+
+</html>

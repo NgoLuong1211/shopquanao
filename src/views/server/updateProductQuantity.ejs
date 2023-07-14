@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Thêm sản phẩm</title>
+    <!-- Bước 1: Đã bao gồm tệp CSS của Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1>Thay đổi số lượng</h1>
+        <form action="/server/updateProductQuantity?_method=PATCH" method="POST">
+            <div class="form-group">
+                <label for="productID">Product ID:</label>
+                <input type="text" id="productID" name="productID" value="<%= product.productID %>" class="form-control" readonly  required>
+            </div>
+            <div class="form-group">
+                <label for="size">Size:</label>
+                <input type="text" id="size" name="size" value="<%= product.size %>" class="form-control" readonly  required>
+            </div>
+            <div class="form-group">
+                <label for="couleur">Màu:</label>
+                <input type="text" id="couleur" name="couleur" value="<%= product.couleur %>" class="form-control" readonly  required>
+              </div>
+            <div class="form-group">
+                <label for="quantity">Số lượng:</label>
+                <input type="text" id="quantity" name="quantity" value="<%= product.quantity %>" class="form-control" required>
+            </div>
+            <input type="hidden" name="id" value="<%= product.id %>">
+            <input type="submit" value="Thêm sản phẩm" class="btn btn-primary">
+        </form>
+    </div>
+
+    <!-- Bước 2: Đã bao gồm tệp JavaScript của Bootstrap -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</body>
+
+</html>

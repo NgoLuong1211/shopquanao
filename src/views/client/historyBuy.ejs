@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Lịch sử mua hàng</title>
+  <%- include('../layout/header.ejs'); -%>
+</head>
+<body>
+  <%- include('../layout/navbar.ejs'); -%>
+<div class="container">
+  <h1>Lịch sử mua hàng</h1>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Ngày mua</th>
+        <th>Mã đơn hàng</th>
+        <th>Tổng tiền</th>
+        <th>Trạng thái</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Dùng vòng lặp để hiển thị thông tin từng đơn hàng -->
+      <% oders.forEach(function(oder) { %>
+        <tr>
+          <td><%= oder.createdAt.getDate() %> / <%= oder.createdAt.getMonth() %> / <%= oder.createdAt.getFullYear() %></td>
+          <td><%= oder.oderID %></td>
+          <td><%= oder.total %></td>
+          <td><%= oder.status.name %></td>
+        </tr>
+      <% }); %>
+    </tbody>
+  </table>
+</div>
+
+<%- include('../layout/script.ejs'); -%>
+
+</body>
+</html>

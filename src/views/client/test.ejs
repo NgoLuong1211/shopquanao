@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div id="page"></div>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script>
+    function url(page) {
+      var currentUrl = new URL(window.location.href);
+
+      // Kiểm tra nếu có tham số "search" trong URL
+      if (currentUrl.searchParams.has("search")) {
+        // Lấy giá trị của tham số "search"
+        var searchValue = currentUrl.searchParams.get("search");
+
+        // Tạo URL mới với tham số "search" và "page" là 2
+        var newUrl = new URL("http://localhost:8888/product");
+        newUrl.searchParams.set("search", searchValue);
+        newUrl.searchParams.set("page", page);
+
+        // Chuyển hướng đến URL mới
+        return newUrl.href;
+      } else {
+        // Tạo URL mới với tham số "page" là 2
+        var newUrl = new URL("http://localhost:8888/product");
+        newUrl.searchParams.set("page", page);
+
+        // Chuyển hướng đến URL mới
+        return newUrl.href;
+      }
+    }
+
+    const hi = url(1)
+
+    console.log(hi)
+  </script>
+</body>
+</html>

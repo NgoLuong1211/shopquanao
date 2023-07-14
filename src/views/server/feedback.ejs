@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('../layout/header.ejs'); -%>
+  <title>Quần áo mới</title>
+  <style>
+    .feedback-container {
+      max-width: 800px;
+      margin: 0 auto;
+      margin-top: 20px;
+    }
+
+    .feedback-item {
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      padding: 10px;
+    }
+
+    .feedback-item h3 {
+      margin-top: 0;
+    }
+
+    .feedback-item p {
+      margin-bottom: 0;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <%- include('../layout/navbarServer.ejs'); -%>
+
+  <div class="container feedback-container">
+    <h1>Phản hồi khách hàng</h1>
+    <div id="feedback-list">
+        <% feedback.forEach(function(item, index) { %>
+      <div class="feedback-item">
+        <p>Ngày: <%= item.createAt.getDate() %> / <%= item.createAt.getMonth() %> / <%= item.createAt.getFullYear() %></p>
+        <h4>Chủ đề: <%= item.subject_name %></h4>
+        <p>Họ tên: <%= item.fullname %></p>
+        <p>Email: <%= item.email %></p>
+        <p>Số điện thoại: <%= item.phone_number %></p>
+        <p>Ghi chú: <%= item.note %></p>
+      </div>
+      <% }); %>
+      <!-- Thêm các phản hồi khác tại đây -->
+    </div>
+  </div>
+  
+  
+  
+  <!-- Liên kết với Bootstrap JavaScript -->
+  <%- include('../layout/script.ejs'); -%>
+    
+</body>
+</html>

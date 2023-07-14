@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('../layout/header.ejs'); -%>
+    <title>Phản hồi ý kiến</title>
+</head>
+<body>
+
+    <div class="container feedback-container">
+        <h2>Phản hồi về sản phẩm</h2>
+        <form id="feedback-form" method="POST" action="/feedBack">
+          <div class="form-group">
+            <label for="fullname">Họ và tên:</label>
+            <input type="text" class="form-control" id="fullname" name="fullname" required>
+          </div>
+          <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" class="form-control" id="email" name="email" required>
+          </div>
+          <div class="form-group">
+            <label for="phone_number">Số điện thoại:</label>
+            <input type="tel" class="form-control" id="phone_number" name="phone_number" required>
+          </div>
+          <div class="form-group">
+            <label for="subject_name">Chủ đề:</label>
+            <input type="text" class="form-control" id="subject_name" name="subject_name" required>
+          </div>
+          <div class="form-group">
+            <label for="note">Ghi chú:</label>
+            <textarea class="form-control" id="note" name="note" rows="4" required></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary">Gửi</button>
+        </form>
+      </div>
+      
+
+
+    <!-- script -->
+    <%- include('../layout/script.ejs'); -%>
+</body>
+</html>

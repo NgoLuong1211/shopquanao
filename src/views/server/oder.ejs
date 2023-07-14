@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('../layout/header.ejs'); -%>
+        <title>Đơn đặt hàng</title>
+</head>
+
+<body>
+
+    <!-- Header -->
+    <%- include('../layout/navbarServer.ejs'); -%>
+        <div class="container">
+            <h1>Đơn hàng chờ sử lý</h1>
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Ngày mua</th>
+                        <th>Mã đơn hàng</th>
+                        <th>Tổng tiền</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Dùng vòng lặp để hiển thị thông tin từng đơn hàng -->
+                    <% oders.forEach(function(oder) { %>
+                        <tr>
+                            <td>
+                                <%= oder.createdAt.getDate() %> / <%= oder.createdAt.getMonth() %> / <%=
+                                            oder.createdAt.getFullYear() %>
+                            </td>
+                            <td>
+                                <%= oder.oderID %>
+                            </td>
+                            <td>
+                                <%= oder.total %>
+                            </td>
+                            <td>
+                                <%= oder.status.name %>
+                            </td>
+                            <td><a href="/server/statusOder?id=<%= oder._id %>&status=1">Giao đơn</a></td>
+                            <td><a href="/server/statusOder?id=<%= oder._id %>&status=2">Xóa đơn</a></td>
+                        </tr>
+                        <% }); %>
+                </tbody>
+            </table>
+        </div>
+
+
+        <!-- Liên kết với Bootstrap JavaScript -->
+        <%- include('../layout/script.ejs'); -%>
+
+</body>
+
+</html>

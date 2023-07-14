@@ -1,0 +1,98 @@
+database shopquanao
+1, bảng role
+	- id: pk tự tăng
+	- name: string
+2, bảng user
+	- id: pk tự tăng
+	- fullname: string
+	- email: string
+	- phone_number: string
+	- address: string
+	- password: string
+	- role_id: fk -> role(id)
+3, bảng danh mục -> category
+	- id: pk tự tăng
+	- name: string
+4, bảng size -> size
+	- id: pk tự tăng
+	- name: string
+5, bảng nhà cung cấp -> supplier
+	- id: pk tự tăng
+	- name: string
+	- phone_number: string
+	- address: date
+5, bảng sản phẩm ->product
+	- id: pk tự tăng
+	- category_id: fk -> category(id)
+	- title: string
+	- price: int
+	- discount: int
+	- supplier: fk -> supplier(id)
+	- size: fk -> size(id)
+	- image: string
+	- quantity: int
+	- description: string
+6, bảng quản lý e	
+	- id: pk tự tăng
+	- product_id: fk -> product(id)
+	- image: string
+7, bảng quản lý phản hồi -> feedback
+	- id: pk tự tăng
+	- firstname: string
+	- lastname: string
+	- email: string
+	- phone_number: string
+	- subject_name: string
+	- note: string
+8, quản lý đơn hàng  
+	- id: pk tự tăng
+	- fullname: string
+	- eamil: string
+	- phone_number: string
+	- address: string
+	- note: string
+	- oder-time:
+	- danh sách sản phẩm:
+		- sản phẩm 1 x số lượng mua x giá thời điểm mua
+	8.1, bảng oder -> oder
+		- id: pk tự tăng
+		- fullname: string
+		- eamil: string
+		- phone_number: string
+		- address: string
+		- note: string
+		- oder-time: date
+		- status: string
+	8.2, bảng chi tiết đơn hàng -> oder_detail:
+		- id: pk tự tăng
+		- oder_id: fk -> oder(id)
+		- product_id: fk -> poduct(id)
+		- price: int
+		- num: int -> số lượng sản phẩm mua
+		- total_money: lưu tổng tiền của sản phẩm 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

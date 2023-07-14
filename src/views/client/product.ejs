@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <%- include('../layout/header.ejs'); -%>
+    <title>Quần áo mới</title>
+</head>
+
+<body>
+
+  <!-- Header -->
+  <%- include('../layout/navbar.ejs'); -%>
+
+    <!-- Hero section -->
+    <section class="jumbotron text-center">
+      <h1 class="display-4">Shop Quần áo</h1>
+    </section>
+    <!-- Tìm kiếm -->
+    <div class="container mt-5">
+      <div class="row">
+        <div class="col-md-6">
+          <form class="d-flex" role="search">
+            <input class="form-control me-2" type="search" name="search" id="search" placeholder="Search"
+              aria-label="Search">
+            <button class="btn btn-success" type="submit">Search</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Danh sách sản phẩm -->
+    <div class="container mt-5">
+      <div class="row">
+
+        <% for(var i=0; i < product.length; i++) { %>
+          <div class="col-lg-4 col-md-6 mb-4">
+            <div class="card">
+              <img src="<%= product[i].image %>" class="card-img-top" alt="Product 1">
+              <div class="card-body">
+                <h5 class="card-title">
+                  <%= product[i].title %>
+                </h5>
+                <p class="card-text">Giá: <%= product[i].price %>đ</p>
+                <a href="/detail/<%= product[i]._id %>" class="btn btn-primary">Mua sản phẩm</a>
+              </div>
+            </div>
+          </div>
+          <% } %>
+
+      </div>
+      <nav aria-label="Page navigation example">
+        <ul class="pagination">
+          <% if(search) { %>
+            <% for(var i=0; i < totalPage; i++) { %>
+              <li class="page-item"><a class="page-link"
+                  href="http://localhost:8888/product?search=<%= search %>&page=<%= i+1 %>"><%= i+1 %></a></li>
+            <% } %>
+          <% }else{ %>
+            <% for(var i=0; i < totalPage; i++) { %>
+              <li class="page-item"><a class="page-link" href="http://localhost:8888/product?page=<%= i+1 %>"><%= i+1 %></a></li>
+            <% } %>
+          <% } %>
+        </ul>
+      </nav>
+    </div>
+
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white text-center py-3">
+      &copy; 2023 Product Catalog
+    </footer>
+
+    <!-- Liên kết với Bootstrap JavaScript -->
+
+
+    <%- include('../layout/script.ejs'); -%>
+</body>
+
+</html>

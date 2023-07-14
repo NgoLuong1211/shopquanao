@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('../layout/header.ejs'); -%>
+        <title>Hóa đơn</title>
+</head>
+
+<body>
+
+    <!-- Header -->
+    <%- include('../layout/navbarServer.ejs'); -%>
+        <div class="container">
+            <h1>Danh sách hóa đơn</h1>
+            <a href="/server/searchBill" class="btn btn-info">Tìm kiếm hóa đơn</a>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Ngày mua</th>
+                        <th>Mã hóa đơn</th>
+                        <th>Tổng tiền</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Dùng vòng lặp để hiển thị thông tin từng đơn hàng -->
+                    <% oders.forEach(function(oder) { %>
+                        <tr>
+                            <td>
+                                <%= oder.createdAt.getDate() %> / <%= oder.createdAt.getMonth() %> / <%=
+                                            oder.createdAt.getFullYear() %>
+                            </td>
+                            <td>
+                                <%= oder.oderID %>
+                            </td>
+                            <td>
+                                <%= oder.total %>
+                            </td>
+                            <td>
+                                <%= oder.status.name %>
+                            </td>
+                            <td><a href="/server/statusOder?id=<%= oder._id %>&status=1">Giao đơn</a></td>
+                            <td><a href="/server/statusOder?id=<%= oder._id %>&status=2">Hủy đơn</a></td>
+                        </tr>
+                        <% }); %>
+                </tbody>
+            </table>
+        </div>
+
+
+        <!-- Liên kết với Bootstrap JavaScript -->
+        <%- include('../layout/script.ejs'); -%>
+
+</body>
+
+</html>

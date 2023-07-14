@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shop bán quần áo</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+
+<body>
+
+  <!-- Header -->
+  <%- include('../layout/navbar.ejs'); -%>
+
+  <!-- Hero section -->
+  <section class="jumbotron text-center">
+    <h1 class="display-4">Chào mừng đến với Shop Quần Áo</h1>
+    <p class="lead">Hãy khám phá bộ sưu tập quần áo mới nhất của chúng tôi!</p>
+    <a href="/newProduct?category=quan" class="btn btn-primary">Xem sản phẩm</a>
+  </section>
+
+  <!-- Sản phẩm nổi bật -->
+  <div class="container mt-5">
+    <div class="row">
+
+      <% for(var i=0; i < product.length; i++) { %>
+      <div class="col-lg-4 col-md-6 mb-4">
+        <div class="card">
+          <img src="<%= product[i].image %>" class="card-img-top" alt="Product 1">
+          <div class="card-body">
+            <h5 class="card-title"><%= product[i].title %></h5>
+            <p class="card-text">Giá: <%= product[i].price %>đ</p>
+            <a href="/detail/<%= product[i].id %>" class="btn btn-primary">Mua sản phẩm</a>
+          </div>
+        </div>
+      </div>
+      <% } %>
+
+      
+
+      
+    </div>
+  </div>
+    
+            
+              </section>
+              <!-- Footer -->
+              <footer class="bg-dark text-light text-center py-4">
+                <p>&copy; 2023 Shop Quần Áo. All rights reserved.</p>
+              </footer>
+              <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+              <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+              <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+            </body>
+            </html>

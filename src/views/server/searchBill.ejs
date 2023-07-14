@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <%- include('../layout/header.ejs'); -%>
+        <title>Hiển thị hóa đơn</title>
+        <!-- Thêm liên kết tới Bootstrap CSS -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+        <style>
+            .info-label {
+                font-weight: bold;
+            }
+        </style>
+</head>
+
+<body>
+    <%- include('../layout/navbarServer.ejs'); -%>
+        <div class="container">
+            <h1>Tìm kiếm hóa đơn theo mã hóa đơn</h1>
+
+            <!-- Form tìm kiếm hóa đơn -->
+            <div class="card">
+                <div class="card-header">
+                    Tìm kiếm hóa đơn
+                </div>
+                <div class="card-body">
+                    <form role="search">
+                        <div class="form-group">
+                            <label for="invoiceCode">Mã hóa đơn:</label>
+                            <input type="search" name="search" id="search" class="form-control" aria-label="Search"
+                                placeholder="Nhập mã hóa đơn">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Tìm kiếm</button>
+                    </form>
+                </div>
+            </div>
+
+
+            <!-- Thông tin tài khoản -->
+            <% if(search===undefined) { %>
+                <% }else if (infoBill && infoBill.user_id){ %>
+                    <div class="card">
+                        <div class="card-header">
+                            Thông tin tài khoản
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <p class="info-label">Tên tài khoản:</p>
+                                </div>
+                                <div class="col-sm-9">
+                                    <p>
+                                        <%= infoBill.user_id.fullname %>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <p class="info-label">Mã hóa đơn:</p>
+                                </div>
+                                <div class="col-sm-9">
+                                    <p>
+                                        <%= infoBill.oderID %>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <p class="info-label">Ngày mua:</p>
+                                </div>
+                                <div class="col-sm-9">
+                                    <p>
+                                        <%= infoBill.createdAt.getDate() %> / <%= infoBill.createdAt.getMonth() %> / <%=
+                                                    infoBill.createdAt.getFullYear() %>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <p class="info-label">Họ và tên:</p>
+                                </div>
+                                <div class="col-sm-9">
+                                    <p>
+                                        <%= infoBill.fullname %>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <p class="info-label">Email:</p>
+                                </div>
+                                <div class="col-sm-9">
+                                    <p>
+                                        <%= infoBill.email %>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <p class="info-label">Số điện thoại:</p>
+                                </div>
+                                <div class="col-sm-9">
+                                    <p>
+                                        <%= infoBill.phone_number %>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <p class="info-label">Địa chỉ:</p>
+                                </div>
+                                <div class="col-sm-9">
+                                    <p>
+                                        <%= infoBill.address %>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <p class="info-label">Ghi chú:</p>
+                                </div>
+                                <div class="col-sm-9">
+                                    <p>
+                                        <%= infoBill.note %>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <p class="info-label">Trạng thái:</p>
+                                </div>
+                                <div class="col-sm-9">
+                                    <p>
+                                        <%= infoBill.status.name %>
+                                    </p>
+                                </div>
+                                <!-- Nút "Hủy đơn hàng" -->
+                                <div class="row">
+                                    <div class="col-sm-12 text-center">
+                                        <% if (infoBill.status.name !='Đơn hàng bị hủy' ) { %>
+                                            <a href="/server/statusOder?id=<%= infoBill._id %>&status=3" class="btn btn-danger">Hủy đơn hàng</a>
+                                        <% } %>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Danh sách đơn hàng -->
+                    <div class="card mt-4">
+                        <div class="card-header">
+                            Đơn hàng
+                        </div>
+                        <div class="card-body">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>STT</th>
+                                        <th>Tên sản phẩm</th>
+                                        <th>Size</th>
+                                        <th>Màu</th>
+                                        <th>Số lượng</th>
+                                        <th>Giá</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% BillDetail.forEach(function(item, index) { %>
+                                        <tr>
+                                            <td>
+                                                <%= index + 1 %>
+                                            </td>
+                                            <td>
+                                                <%= item.productName %>
+                                            </td>
+                                            <td>
+                                                <%= item.size %>
+                                            </td>
+                                            <td>
+                                                <%= item.color %>
+                                            </td>
+                                            <td>
+                                                <%= item.quantity %>
+                                            </td>
+                                            <td>
+                                                <%= item.price %> VNĐ
+                                            </td>
+                                        </tr>
+                                        <% }); %>
+                                            <!--Thêm các hàng cho các đơn hàng khác-->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <% }%>
+        </div>
+
+        <!--Thêm liên kết tới Bootstrap JavaScript-->
+        <%- include('../layout/script.ejs'); -%>
+            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+
+</html>

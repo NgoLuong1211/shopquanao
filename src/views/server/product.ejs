@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Sản phẩm</title>
+  <%- include('../layout/header.ejs'); -%>
+</head>
+<body>
+  <%- include('../layout/navbarServer.ejs'); -%>
+<div class="container">
+  <h1>Sản phẩm</h1>
+  <a href="/server/createProduct/" class="btn btn-info">Thêm Sản Phẩm</a>
+
+  <div class="container mt-5">
+    <div class="row">
+      <div class="col-md-6">
+        <form class="d-flex" role="search">
+          <input class="form-control me-2" type="search" name="search" id="search" placeholder="Search"
+            aria-label="Search">
+          <button class="btn btn-success" type="submit">Search</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>STT</th>
+        <th>Mã sản phẩm</th>
+        <th>Tên sản phẩm</th>
+        <th>số lượng</th>
+        <th>Giá bán</th>
+        <th>Giảm giá %</th>
+        <th></th>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Dùng vòng lặp để hiển thị thông tin từng đơn hàng -->
+      <% product.forEach(function(item, index) { %>
+      <tr>
+        <td><%= index + 1 %></td>
+        <td><%= item.productID %></td>
+        <td><%= item.title %></td>
+        <td><%= item.quantity %></td>
+        <td><%= item.price %></td>
+        <td><%= item.discount %></td>
+        <td><a href="/server/detailProduct/<%= item.productID %>" class="btn btn-info">Chi tiết</a></td>
+      </tr>
+      <% }); %>
+    </div>
+    </tbody>   
+  </table>
+  <nav aria-label="Page navigation example">
+    <ul class="pagination">
+      <% if(search) { %>
+        <% for(var i=0; i < totalPage; i++) { %>
+          <li class="page-item"><a class="page-link"
+              href="http://localhost:8888/server/product?search=<%= search %>&page=<%= i+1 %>"><%= i+1 %></a></li>
+        <% } %>
+      <% }else{ %>
+        <% for(var i=0; i < totalPage; i++) { %>
+          <li class="page-item"><a class="page-link" href="http://localhost:8888/server/product?page=<%= i+1 %>"><%= i+1 %></a></li>
+        <% } %>
+      <% } %>
+    </ul>
+  </nav>
+</div>
+</div>
+
+<%- include('../layout/script.ejs'); -%>
+
+</body>
+</html>
