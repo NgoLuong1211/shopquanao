@@ -17,7 +17,8 @@ const {
     fixPassword,
     forgotveryfyOtp,
     updatePassword,
-    loginUser
+    changePassword,
+    changePasswords
 } = require('../controllers/account.controller');
 
 router.get('/register', register);
@@ -111,6 +112,8 @@ router.get('/logout', function(req, res, next) {
   });
 });
 
+router.get('/changePassword', changePassword);
+router.patch('/changePasswords', changePasswords);
 router.get('/login', login);
 
 module.exports = router;

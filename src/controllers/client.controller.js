@@ -174,10 +174,11 @@ var that = module.exports = {
                 message,
                 element,
                 size,
-                color
+                color,
+                image
             } = await detailProduct({ id })
             const user = req.user;
-            res.render('client/detailProduct', { product: element, size: size, color: color, user: user })
+            res.render('client/detailProduct', { product: element, size: size, color: color, image: image, user: user })
         } catch (error) {
             console.log(error);
             next(error);

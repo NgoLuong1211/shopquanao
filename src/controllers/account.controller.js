@@ -156,6 +156,28 @@ var that = module.exports = {
             console.log(error);
             next(error);
         }
+    },
+    changePassword: async(req, res, next) => {
+        try {
+            res.render('account/changePassword')
+        } catch (error) {
+            console.log(error);
+            next(error);
+        }
+    },
+    changePasswords: async(req, res, next) => {
+        try {
+            const {
+                currentPassword,
+                newPassword
+            } = req.body;
+            const email = req.user.email
+            await _User.updateOne({email: email, password: currentPassword}, {password: newPassword})
+            res.redirect('/account/login')
+        } catch (error) {
+            console.log(error);
+            next(error);
+        }
     }
 
 

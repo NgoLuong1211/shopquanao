@@ -10,13 +10,13 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="main-image-container">
-                    <img src="https://static.salekit.com/image/site/1576/blogs/cach-chup-hinh-quan-ao-dep.jpg" alt="Sản phẩm ABC" class="main-image" id="mainImage">
+                    <img src="<%= image[0] %>" alt="Sản phẩm ABC" class="main-image" id="mainImage">
                 </div>
                 <!-- <img src="https://static.salekit.com/image/site/1576/blogs/cach-chup-hinh-quan-ao-dep.jpg" alt="Sản phẩm ABC" class="img-fluid" id="mainImage"> -->
                 <div class="small-images">
-                  <img src="https://blog.dktcdn.net/files/cach-chup-san-pham-quan-ao-ban-hang-3.jpg" alt="Sản phẩm ABC" class="small-image" onclick="changeImages('product-image-1.jpg', this)">
-                  <img src="https://nhatminhdecor.com/wp-content/uploads/2019/01/chup-anh-voi-phong-nen-vai-trang-1.jpg" alt="Sản phẩm ABC" class="small-image" onclick="changeImages('product-image-2.jpg', this)">
-                  <!-- <img src="product-image-3.jpg" alt="Sản phẩm ABC" class="small-image" onclick="changeImages('product-image-3.jpg', this)"> -->
+                  <% for(var i=1; i < image.length; i++) { %>
+                  <img src="<%= image[i] %>" class="small-image" onclick="changeImages('product-image-1.jpg', this)">
+                  <% } %>
                 </div>
               </div>
           <div class="col-md-6">

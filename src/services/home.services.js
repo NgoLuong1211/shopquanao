@@ -17,26 +17,26 @@ var that = module.exports = {
     }) => {
         const oder_detail = await _OderDetail.aggregate([
             {
-              $group: {
-                _id: "$productID",
-                totalQuantity: { $sum: "$quantity" },
-              },
+                $group: {
+                    _id: "$productID",
+                    totalQuantity: { $sum: "$quantity" },
+                },
             },
             {
-              $sort: {
-                totalQuantity: -1,
-              },
+                $sort: {
+                    totalQuantity: -1,
+                },
             },
             {
-              $limit: 10,
+                $limit: 10,
             },
-          ])
+        ])
         var arr = [];
-        for(var i=0; i<oder_detail.length; i++){
+        for (var i = 0; i < oder_detail.length; i++) {
             arr.push(oder_detail[i]._id)
         }
-        const products = await _Product.find({productID: {$in: arr}})
-        const uniqueObjects = await productDisplay({products});
+        const products = await _Product.find({ productID: { $in: arr } })
+        const uniqueObjects = await productDisplay({ products });
 
         if (!uniqueObjects) {
             return {
@@ -84,7 +84,7 @@ var that = module.exports = {
                 }
             },
             {
-                $replaceRoot: { 
+                $replaceRoot: {
                     newRoot: "$data"
                 }
             }
@@ -115,13 +115,13 @@ var that = module.exports = {
                 {
                     $match: {
                         $or: [
-                            {title: { $regex: search, $options: 'i' }},
-                            {productID: { $regex: search, $options: 'i' }}
+                            { title: { $regex: search, $options: 'i' } },
+                            { productID: { $regex: search, $options: 'i' } }
                         ]
                     }
                 },
                 {
-                    
+
                     $group: {
                         _id: "$productID",
                     }
@@ -130,8 +130,8 @@ var that = module.exports = {
                 {
                     $match: {
                         $or: [
-                            {title: { $regex: search, $options: 'i' }},
-                            {productID: { $regex: search, $options: 'i' }}
+                            { title: { $regex: search, $options: 'i' } },
+                            { productID: { $regex: search, $options: 'i' } }
                         ]
                     }
                 },
@@ -198,13 +198,13 @@ var that = module.exports = {
                 {
                     $match: {
                         $or: [
-                            {title: { $regex: search, $options: 'i' }},
-                            {productID: { $regex: search, $options: 'i' }}
+                            { title: { $regex: search, $options: 'i' } },
+                            { productID: { $regex: search, $options: 'i' } }
                         ]
                     }
                 },
                 {
-                    
+
                     $group: {
                         _id: "$productID",
                     }
@@ -213,8 +213,8 @@ var that = module.exports = {
                 {
                     $match: {
                         $or: [
-                            {title: { $regex: search, $options: 'i' }},
-                            {productID: { $regex: search, $options: 'i' }}
+                            { title: { $regex: search, $options: 'i' } },
+                            { productID: { $regex: search, $options: 'i' } }
                         ]
                     }
                 },
@@ -266,8 +266,23 @@ var that = module.exports = {
     }) => {
         var size = [];
         var color = [];
+        var image = [];
         const product = await _Product.findOne({ _id: id });
-        const products = await _Product.find({productID: product.productID})
+        const images = await _Product.aggregate([
+            { $match: { productID: product.productID } },
+
+            {
+                $group: {
+                    _id: "$size",
+                    product: { $first: "$$ROOT" }
+                }
+            }
+        ])
+        images.forEach(item => {
+            image.push(item.product.image);
+        });
+
+        const products = await _Product.find({ productID: product.productID })
         products.forEach(item => {
             size.push(item.size);
             color.push(item.couleur);
@@ -282,7 +297,8 @@ var that = module.exports = {
                 code: 200,
                 element: product,
                 size: size,
-                color: color
+                color: color,
+                image: image
             }
         }
     },
