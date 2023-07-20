@@ -131,7 +131,7 @@ var that = module.exports = {
                 couleur,
                 description
             })
-            res.redirect('/back')
+            res.redirect('back')
         } catch (error) {
             console.log(error);
             next(error);

@@ -65,7 +65,8 @@ var that = module.exports = {
             phone_number: phone,
             address: address,
             note: note,
-            status: '649246a5bbc25be2fda3863a'
+            status: '649246a5bbc25be2fda3863a',
+            total: 0
         })
         const product = await _Product.findOne({ _id: productID });
         const UpdateQuantity = product.quantity - quantity;
@@ -76,7 +77,8 @@ var that = module.exports = {
             size: product.size,
             color: product.couleur,
             price: product.price,
-            quantity: quantity
+            quantity: quantity,
+            total: product.price * quantity
         })
         await _Product.updateOne({_id: productID}, {quantity: UpdateQuantity})
     },

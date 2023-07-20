@@ -25,7 +25,7 @@ var that = module.exports = {
             for (var j = 0; j < total.length; j++) {
                 if (oder[i].id === total[j]._id) {
                     oder[i].total = total[j].total;
-                    break; // Nếu tìm thấy sự trùng khớp, thoát khỏi vòng lặp trong mảng 2
+                    break;
                 }
             }
         }
@@ -63,7 +63,7 @@ var that = module.exports = {
     bill: async ({
 
     }) => {
-        var oder = await _Oder.find({ status: '649246edbbc25be2fda3863c' });
+        var oder = await _Oder.find({ status: '649246edbbc25be2fda3863c' }).populate('status');
         const total = await _OderDetail.aggregate([
             {
                 $group: {
@@ -76,7 +76,7 @@ var that = module.exports = {
             for (var j = 0; j < total.length; j++) {
                 if (oder[i].id === total[j]._id) {
                     oder[i].total = total[j].total;
-                    break; // Nếu tìm thấy sự trùng khớp, thoát khỏi vòng lặp trong mảng 2
+                    break;
                 }
             }
         }

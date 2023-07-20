@@ -10,6 +10,7 @@
 <body>
     <div class="container">
         <h1>Thêm sản phẩm</h1>
+        <a href="/server/product" class="btn btn-primary">Về trang sản phẩm</a>
         <form action="/server/createProduct" method="POST">
             <div class="form-row">
                 <div class="form-group col-md-6">
@@ -26,7 +27,7 @@
                     <label for="categoryID">Loại:</label>
                     <select id="categoryID" name="categoryID" class="form-control" required>
                         <% category.forEach(function(item, index) { %>
-                            <option value="<%= item.name %>">
+                            <option value="<%= item.id %>">
                                 <%= item.name %>
                             </option>
                             <% }); %>
@@ -47,7 +48,7 @@
                     <label for="supplierID">Nhà cung cấp:</label>
                     <select id="supplierID" name="supplierID" class="form-control" required>
                         <% supplier.forEach(function(item, index) { %>
-                            <option value="<%= item.name %>">
+                            <option value="<%= item.id %>">
                                 <%= item.name %>
                             </option>
                             <% }); %>
@@ -77,7 +78,7 @@
             </div>
             <div class="form-group">
                 <label for="description">Mô tả:</label>
-                <textarea id="description" name="description" class="form-control" required></textarea>
+                <textarea id="description" name="description" class="form-control"></textarea>
             </div>
             <input type="submit" value="Thêm sản phẩm" class="btn btn-primary">
         </form>

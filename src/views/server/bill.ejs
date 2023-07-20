@@ -19,6 +19,7 @@
                         <th>Ngày mua</th>
                         <th>Mã hóa đơn</th>
                         <th>Tổng tiền</th>
+                        <th>Trạng thái</th>
                         <th></th>
                     </tr>
                 </thead>
@@ -39,8 +40,6 @@
                             <td>
                                 <%= oder.status.name %>
                             </td>
-                            <td><a href="/server/statusOder?id=<%= oder._id %>&status=1">Giao đơn</a></td>
-                            <td><a href="/server/statusOder?id=<%= oder._id %>&status=2">Hủy đơn</a></td>
                         </tr>
                         <% }); %>
                 </tbody>

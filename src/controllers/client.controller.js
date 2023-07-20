@@ -104,7 +104,7 @@ var that = module.exports = {
         }
 
     },
-    test: async(req, res, next) => {
+    test: async (req, res, next) => {
         res.render('client/test')
     },
     product: async (req, res, next) => {
@@ -128,11 +128,8 @@ var that = module.exports = {
                 return res.status(code).json(message);
             } else {
                 const user = req.user;
-                res.render('client/product', {search: search, totalPage: totalPage, product: element, user: user });
+                res.render('client/product', { search: search, totalPage: totalPage, product: element, user: user });
             }
-
-
-
         } catch (error) {
             console.log(error);
             next(error);
@@ -156,7 +153,7 @@ var that = module.exports = {
                 search,
                 page
             });
-            res.json({totalPage, element})
+            res.json({ totalPage, element })
 
 
 
@@ -365,7 +362,7 @@ var that = module.exports = {
     feedBack: async (req, res, next) => {
         try {
             const user = req.user
-            res.render('client/feedback',{user: user})
+            res.render('client/feedback', { user: user })
         } catch (error) {
             console.log(error);
             next(error);

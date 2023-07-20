@@ -13,7 +13,6 @@ var that = module.exports = {
         id
     }) => {
         const products = await _Product.find({productID: id})
-        console.log(products);
         if (!products) {
             return {
                 code: 404,

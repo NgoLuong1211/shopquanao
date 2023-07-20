@@ -6,7 +6,7 @@
 </head>
 <body>
     <div class="container">
-        <h1><%= product.title %></h1>
+        <h1><%= product[0].title %></h1>
         <div class="row">
             <div class="col-md-6">
                 <div class="main-image-container">
@@ -21,9 +21,9 @@
               </div>
           <div class="col-md-6">
             <form id="productForm" action="/buyNow" method="POST">
-            <h3>Thông tin sản phẩm: <%= product.title %></h3>
-            <p>Mô tả sản phẩm <%= product.title %>: <%= product.description %></p>
-            <p>Giá: <%= product.price %> đ</p>
+            <h3>Thông tin sản phẩm: <%= product[0].title %></h3>
+            <p>Mô tả sản phẩm <%= product[0].title %>: <%= product[0].description %></p>
+            <p>Giá: <%= product[0].price %> đ</p>
             
             <div class="form-group">
               <label for="sizeSelect">Chọn kích thước:</label>
@@ -58,9 +58,9 @@
                   <button class="btn btn-outline-secondary" type="button" id="increaseQuantity">+</button>
                 </div>
               </div>
-              <input type="hidden" name="productID" value="<%= product.productID %>">
-              <input type="hidden" name="price" value="<%= product.price %>">
-              <input type="hidden" name="id" value="<%= product.id %>">
+              <input type="hidden" name="productID" value="<%= product[0].productID %>">
+              <input type="hidden" name="price" value="<%= product[0].price %>">
+              <input type="hidden" name="id" value="<%= product[0].id %>">
 
       
               <div class="d-grid gap-2">

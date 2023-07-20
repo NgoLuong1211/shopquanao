@@ -54,8 +54,42 @@ var that = module.exports = {
         category
     }) => {
         const Category = await _Category.findOne({ name: category })
-        const products = await _Product.find({ category_id: Category.id }).sort({ createdAt: -1 }).limit(10);
-        const uniqueObjects = await productDisplay({ products });
+        const products = await _Product.aggregate([
+            {
+                $match: { category_id: Category.id }
+            }
+            ,
+            {
+                $group: {
+                    _id: "$productID",
+                    created_at: { $first: "$createdAt" },
+                    totalQuantity: { $sum: "$quantity" },
+                    priceField: { $first: "$price" },
+                    titleField: { $first: "$title" },
+                    discountField: { $first: "$discount" },
+                    imageField: { $first: "$image" }
+                },
+            },
+            {
+                $project: {
+                    _id: 0,
+                    productID: "$_id",
+                    quantity: "$totalQuantity",
+                    title: "$titleField",
+                    price: "$priceField",
+                    discount: "$discountField",
+                    image: "$imageField",
+                }
+            },
+            {
+                $sort: {
+                    created_at: -1
+                },
+            },
+            {
+                $limit: 3,
+            },
+        ])
         if (!products) {
             return {
                 code: 404,
@@ -64,7 +98,7 @@ var that = module.exports = {
         } else {
             return {
                 code: 200,
-                element: uniqueObjects
+                element: products
             }
         }
     },
@@ -72,7 +106,7 @@ var that = module.exports = {
         search,
         page
     }) => {
-        const itemsPerPage = 2;
+        const itemsPerPage = 6;
         const Page = parseInt(page);
 
 
@@ -80,12 +114,22 @@ var that = module.exports = {
             {
                 $group: {
                     _id: "$productID",
-                    data: { $first: "$$ROOT" }
+                    totalQuantity: { $sum: "$quantity" },
+                    priceField: { $first: "$price" },
+                    titleField: { $first: "$title" },
+                    discountField: { $first: "$discount" },
+                    imageField: { $first: "$image" }
                 }
             },
             {
-                $replaceRoot: {
-                    newRoot: "$data"
+                $project: {
+                    _id: 0,
+                    productID: "$_id",
+                    quantity: "$totalQuantity",
+                    title: "$titleField",
+                    price: "$priceField",
+                    discount: "$discountField",
+                    image: "$imageField",
                 }
             }
             ,
@@ -102,7 +146,6 @@ var that = module.exports = {
                 $limit: itemsPerPage
             }
         ])
-
         let data = await _Product.aggregate([
             {
                 $group: {
@@ -138,12 +181,22 @@ var that = module.exports = {
                 {
                     $group: {
                         _id: "$productID",
-                        data: { $first: "$$ROOT" }
+                        totalQuantity: { $sum: "$quantity" },
+                        priceField: { $first: "$price" },
+                        titleField: { $first: "$title" },
+                        discountField: { $first: "$discount" },
+                        imageField: { $first: "$image" }
                     }
                 },
                 {
-                    $replaceRoot: {
-                        newRoot: "$data"
+                    $project: {
+                        _id: 0,
+                        productID: "$_id",
+                        quantity: "$totalQuantity",
+                        title: "$titleField",
+                        price: "$priceField",
+                        discount: "$discountField",
+                        image: "$imageField",
                     }
                 }
                 ,
@@ -168,12 +221,22 @@ var that = module.exports = {
                 {
                     $group: {
                         _id: "$productID",
-                        data: { $first: "$$ROOT" }
+                        totalQuantity: { $sum: "$quantity" },
+                        priceField: { $first: "$price" },
+                        titleField: { $first: "$title" },
+                        discountField: { $first: "$discount" },
+                        imageField: { $first: "$image" }
                     }
                 },
                 {
-                    $replaceRoot: {
-                        newRoot: "$data"
+                    $project: {
+                        _id: 0,
+                        productID: "$_id",
+                        quantity: "$totalQuantity",
+                        title: "$titleField",
+                        price: "$priceField",
+                        discount: "$discountField",
+                        image: "$imageField",
                     }
                 }
                 ,
@@ -221,12 +284,22 @@ var that = module.exports = {
                 {
                     $group: {
                         _id: "$productID",
-                        data: { $first: "$$ROOT" }
+                        totalQuantity: { $sum: "$quantity" },
+                        priceField: { $first: "$price" },
+                        titleField: { $first: "$title" },
+                        discountField: { $first: "$discount" },
+                        imageField: { $first: "$image" }
                     }
                 },
                 {
-                    $replaceRoot: {
-                        newRoot: "$data"
+                    $project: {
+                        _id: 0,
+                        productID: "$_id",
+                        quantity: "$totalQuantity",
+                        title: "$titleField",
+                        price: "$priceField",
+                        discount: "$discountField",
+                        image: "$imageField",
                     }
                 }
                 ,
@@ -267,9 +340,24 @@ var that = module.exports = {
         var size = [];
         var color = [];
         var image = [];
-        const product = await _Product.findOne({ _id: id });
-        const images = await _Product.aggregate([
-            { $match: { productID: product.productID } },
+        const product = await _Product.find({ productID: id }).limit(1);
+        const imageandcolor = await _Product.aggregate([
+            { $match: { productID: id } },
+
+            {
+                $group: {
+                    _id: "$couleur",
+                    product: { $first: "$$ROOT" }
+                }
+            }
+        ])
+        imageandcolor.forEach(item => {
+            image.push(item.product.image);
+            color.push(item.product.couleur);
+        });
+
+        const sizes = await _Product.aggregate([
+            { $match: { productID: id } },
 
             {
                 $group: {
@@ -278,15 +366,10 @@ var that = module.exports = {
                 }
             }
         ])
-        images.forEach(item => {
-            image.push(item.product.image);
+        sizes.forEach(item => {
+            size.push(item.product.size);
         });
 
-        const products = await _Product.find({ productID: product.productID })
-        products.forEach(item => {
-            size.push(item.size);
-            color.push(item.couleur);
-        });
         if (!product) {
             return {
                 code: 404,

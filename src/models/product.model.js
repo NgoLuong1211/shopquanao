@@ -25,6 +25,8 @@ const Products = new Schema({
         ref: 'Color'
     },
     productID: { type: String, required: true }
-  });
+  }, {
+    timestamps: true,
+});
 
 module.exports =  mongoose.model('Product', Products);
