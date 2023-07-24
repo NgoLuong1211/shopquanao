@@ -24,24 +24,24 @@ const {
 } = require('../controllers/client.controller');
 
 router.post('/buyNow',(req, res, next) => {
-    // Kiểm tra xem người dùng đã đăng nhập hay chưa
+
     if (req.isAuthenticated()) {
-        // Người dùng đã đăng nhập, tiếp tục xử lý
+
         next();
     } else {
-        // Người dùng chưa đăng nhập, chuyển hướng đến trang đăng nhập
+
         req.session.url = req.session.detail
         
         res.redirect('/account/login');
     }
 }, buyNow);
 router.post('/buyCart',(req, res, next) => {
-    // Kiểm tra xem người dùng đã đăng nhập hay chưa
+
     if (req.isAuthenticated()) {
-        // Người dùng đã đăng nhập, tiếp tục xử lý
+
         next();
     } else {
-        // Người dùng chưa đăng nhập, chuyển hướng đến trang đăng nhập
+
         req.session.url = '/cart'
         res.redirect('/account/login');
     }
@@ -52,7 +52,7 @@ router.get('/carts', carts);
 router.get('/product', product);
 router.get('/products', products);
 router.get('/detail/:_id',(req, res, next) => {
-    req.session.detail = req.originalUrl; // Lưu lại URL hiện tại
+    req.session.detail = req.originalUrl;
     next()
 }, detailProduct);
 router.get('/checkout', checkout);

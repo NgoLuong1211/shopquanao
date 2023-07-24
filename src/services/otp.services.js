@@ -60,10 +60,10 @@ var that = module.exports = {
                     });    
                 
                 let info = await transporter.sendMail({
-                  from: '"Fred Foo 👻" <ngoluong121102@gmail.com>', // sender address
-                  to: email, // list of receivers
-                  subject: "Hello ✔", // Subject line
-                  text: `Mã otp của bạn là: ${OTP}`, // plain text body
+                  from: '"Fred Foo 👻" <ngoluong121102@gmail.com>',
+                  to: email,
+                  subject: "Hello ✔",
+                  text: `Mã otp của bạn là: ${OTP}`,
                 })
                     } catch (error) {
                         console.log(error)

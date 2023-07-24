@@ -136,7 +136,7 @@ var that = module.exports = {
             ,
             {
                 $sort: {
-                    productID: 1 // 1: Sắp xếp từ trên xuống dưới, -1: Sắp xếp từ dưới lên trên
+                    productID: 1
                 }
             }
             ,
@@ -243,7 +243,7 @@ var that = module.exports = {
                 ,
                 {
                     $sort: {
-                        productID: 1 // 1: Sắp xếp từ trên xuống dưới, -1: Sắp xếp từ dưới lên trên
+                        productID: 1
                     }
                 }
                 ,
@@ -306,7 +306,7 @@ var that = module.exports = {
                 ,
                 {
                     $sort: {
-                        productID: 1 // 1: Sắp xếp từ trên xuống dưới, -1: Sắp xếp từ dưới lên trên
+                        productID: 1
                     }
                 }
                 ,

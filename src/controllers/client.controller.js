@@ -314,9 +314,9 @@ var that = module.exports = {
         if (code != 200) {
             return res.status(code).json(message);
         } else {
-            // Kiểm tra xem giỏ hàng đã tồn tại trong session hay chưa
+
             if (!req.session.cart) {
-                req.session.cart = []; // Tạo một mảng rỗng để lưu trữ thông tin giỏ hàng
+                req.session.cart = []; 
             }
             const cart = req.session.cart;
             let check = true;
@@ -333,7 +333,6 @@ var that = module.exports = {
 
             }
             if (check) {
-                // // Thêm sản phẩm vào giỏ hàng trong session
                 req.session.cart.push(element);
                 res.redirect('/cart');
             } else {

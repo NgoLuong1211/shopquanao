@@ -18,11 +18,9 @@ var that = module.exports = {
       oder.forEach(item => {
         arr.push(item.id)
       });
-        // Tạo đối tượng Date đại diện cho thời điểm bắt đầu của ngày hôm nay
         var startOfDay = new Date();
         startOfDay.setHours(0, 0, 0, 0);
 
-        // Tạo đối tượng Date đại diện cho thời điểm cuối của ngày hôm nay
         var endOfDay = new Date();
         endOfDay.setHours(23, 59, 59, 999);
 
@@ -40,7 +38,6 @@ var that = module.exports = {
           }
         }
 
-        // Lấy phần tử mới nhất trong bảng _Revenue
         const revenue = await _Revenue.findOne().sort({ createdAt: -1 })
         const currentTime = new Date();
         if(revenue.createdAt.getDate()===currentTime.getDate()){
@@ -53,7 +50,7 @@ var that = module.exports = {
         }
         const data = await _Revenue.find({
           $expr: {
-            $eq: [{ $month: '$createdAt' }, month] // Truy vấn dữ liệu trong tháng 1 (tìm kiếm các bản ghi có createdAt trong tháng 1)
+            $eq: [{ $month: '$createdAt' }, month]
           }
         })
         return data

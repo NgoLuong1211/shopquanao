@@ -44,10 +44,8 @@ var that = module.exports = {
             specialChars: false
         });
 
-        // Kiểm tra số ngẫu nhiên có tồn tại trong cơ sở dữ liệu hay không
         let existingOrder = await _Oder.findOne({ otp: oderID });
       
-        // Nếu số ngẫu nhiên đã tồn tại, tạo lại số mới
         while (existingOrder) {
           oderID = otpGenerator.generate(6, {
             digits: true,
@@ -160,10 +158,8 @@ var that = module.exports = {
             specialChars: false
         });
 
-        // Kiểm tra số ngẫu nhiên có tồn tại trong cơ sở dữ liệu hay không
         let existingOrder = await _Oder.findOne({ otp: oderID });
       
-        // Nếu số ngẫu nhiên đã tồn tại, tạo lại số mới
         while (existingOrder) {
           oderID = otpGenerator.generate(6, {
             digits: true,

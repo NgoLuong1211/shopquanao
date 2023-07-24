@@ -42,17 +42,16 @@ function(req, res, next) {
 
     const oldCart = req.session.cart;
     const url = req.session.url
-    delete req.session.cart; // Xóa dữ liệu trong session cũ
+    delete req.session.cart; 
     req.login(user, function(err) {
       if(user.role_id==='6465fbc1c6a7fccffde390c7'){
         if (err) {
           return next(err);
         }
   
-        // Chuyển đổi dữ liệu từ session cũ sang session mới
         if (oldCart) {
-          req.session.cart = oldCart; // Gán dữ liệu vào session mới
-          // console.log(req.user.cart)
+          req.session.cart = oldCart;
+
         }
         var returnTo = url || '/';
         req.session.url = null;
@@ -78,17 +77,15 @@ router.post('/loginUser', function(req, res, next) {
 
     const oldCart = req.session.cart;
     const url = req.session.url
-    delete req.session.cart; // Xóa dữ liệu trong session cũ
+    delete req.session.cart;
     req.login(user, function(err) {
       if(user.role_id==='6465fbc1c6a7fccffde390c7'){
         if (err) {
           return next(err);
         }
   
-        // Chuyển đổi dữ liệu từ session cũ sang session mới
         if (oldCart) {
-          req.session.cart = oldCart; // Gán dữ liệu vào session mới
-          // console.log(req.user.cart)
+          req.session.cart = oldCart;
         }
         var returnTo = url || '/';
         req.session.url = null;
