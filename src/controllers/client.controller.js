@@ -264,7 +264,7 @@ var that = module.exports = {
                 })
                 req.session.cart = null;
             }
-            res.json('mua thành công!!!')
+            res.redirect('/historyBuy')
         } catch (error) {
             console.log(error);
             next(error);

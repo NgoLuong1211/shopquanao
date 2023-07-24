@@ -100,7 +100,6 @@ var that = module.exports = {
         if(infoBill){
             BillDetail = await _OderDetail.find({ oder_id: infoBill.id });
         }
-
         return {
             infoBill: infoBill,
             BillDetail: BillDetail

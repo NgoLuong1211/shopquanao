@@ -44,7 +44,7 @@ function(req, res, next) {
     const url = req.session.url
     delete req.session.cart; // Xóa dữ liệu trong session cũ
     req.login(user, function(err) {
-      if(user.role_id==='645bee4e320c6a77c0731caf'){
+      if(user.role_id==='6465fbc1c6a7fccffde390c7'){
         if (err) {
           return next(err);
         }
@@ -80,7 +80,7 @@ router.post('/loginUser', function(req, res, next) {
     const url = req.session.url
     delete req.session.cart; // Xóa dữ liệu trong session cũ
     req.login(user, function(err) {
-      if(user.role_id==='645bee4e320c6a77c0731caf'){
+      if(user.role_id==='6465fbc1c6a7fccffde390c7'){
         if (err) {
           return next(err);
         }

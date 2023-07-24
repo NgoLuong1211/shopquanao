@@ -79,11 +79,12 @@ var that = module.exports = {
                     price: "$priceField",
                     discount: "$discountField",
                     image: "$imageField",
+                    timestamp: "$created_at"
                 }
             },
             {
                 $sort: {
-                    created_at: -1
+                    timestamp: -1
                 },
             },
             {

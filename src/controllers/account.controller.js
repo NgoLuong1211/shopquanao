@@ -43,8 +43,8 @@ var that = module.exports = {
     },
     updatePassword: async(req, res, next) => {
         const {password, email} = req.body
-        await _User.updateOne({email: email}, {password: password})
-        res.redirect('/account')
+        await _User.updateOne({email: email, password: { $exists: true }}, {password: password})
+        res.redirect('/account/login')
     },
     loginUser: async(req, res, next) => {
         try {
@@ -115,11 +115,7 @@ var that = module.exports = {
             email,
             otp
         })
-        return res.json({
-            code,
-            message,
-            element
-        })
+        return res.redirect('/account/login')
     },
     registerUser: async(req, res, next) => {
         try {
