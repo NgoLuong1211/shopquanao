@@ -72,7 +72,7 @@ passport.use(new GoogleStrategy({
   if (!existingUser) {
   
     const user = await new _User({
-      role_id: '645bee4e320c6a77c0731caf',
+      role_id: '6465fbc1c6a7fccffde390c7',
       googleID: profile.id,
       email: profile.emails[0].value,
       fullname: profile.displayName,
