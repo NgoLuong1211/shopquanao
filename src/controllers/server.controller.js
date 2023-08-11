@@ -203,7 +203,7 @@ var that = module.exports = {
                 status
             } = req.query
             if(status==='1'){
-                await _Order.updateOne({_id: id}, {status: '649246cbbbc25be2fda3863b'})
+                await _Order.updateOne({_id: id}, {status: '64d5741f494ae4cd8d46222e'})
             }
             if(status==='2'){
                 await statusOrder({
