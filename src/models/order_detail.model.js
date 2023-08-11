@@ -2,10 +2,10 @@ const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
 
-const OderDetails = new Schema({
-    oder_id: { 
+const OrderDetails = new Schema({
+    order_id: { 
         type: String, 
-        ref: 'Oder'
+        ref: 'Order'
     },
     productName: {type: String},
     productID: {type: String},
@@ -18,4 +18,4 @@ const OderDetails = new Schema({
     timestamps: true,
 });
 
-module.exports =  mongoose.model('OderDetail', OderDetails);
+module.exports =  mongoose.model('OrderDetail', OrderDetails);

@@ -4,9 +4,9 @@ const _Category = require('../models/category.model');
 const _Supplier = require('../models/supplier.model');
 const _Size = require('../models/Size.model');
 const _Color = require('../models/Color.model');
-const _Oder = require('../models/oder.model');
-const _OderDetail = require('../models/oder_detail.model')
-const _StatusOder = require('../models/status_oder.model')
+const _Order = require('../models/order.model');
+const _OrderDetail = require('../models/order_detail.model')
+const _StatusOrder = require('../models/status_order.model')
 const otpGenerator = require('otp-generator');
 
 var that = module.exports = {
@@ -37,39 +37,39 @@ var that = module.exports = {
         quantity,
         productID
     }) => {
-        let oderID = otpGenerator.generate(6, {
+        let orderID = otpGenerator.generate(6, {
             digits: true,
             lowerCaseAlphabets: true,
             upperCaseAlphabets: false,
             specialChars: false
         });
 
-        let existingOrder = await _Oder.findOne({ otp: oderID });
+        let existingOrder = await _Order.findOne({ otp: orderID });
       
         while (existingOrder) {
-          oderID = otpGenerator.generate(6, {
+          orderID = otpGenerator.generate(6, {
             digits: true,
             lowerCaseAlphabets: true,
             upperCaseAlphabets: false,
             specialChars: false
         });
-          existingOrder = await _Oder.findOne({ otp: oderID });
+          existingOrder = await _Order.findOne({ otp: orderID });
         }
-        const oder = await _Oder.create({
-            oderID: oderID,
+        const order = await _Order.create({
+            orderID: orderID,
             user_id: userID,
             fullname: fullname,
             email: email,
             phone_number: phone,
             address: address,
             note: note,
-            status: '649246a5bbc25be2fda3863a',
+            status: '64d574081519606f815686b4',
             total: 0
         })
         const product = await _Product.findOne({ _id: productID });
         const UpdateQuantity = product.quantity - quantity;
-        const OderDetail = await _OderDetail.create({
-            oder_id: oder.id,
+        const OrderDetail = await _OrderDetail.create({
+            order_id: order.id,
             productName: product.title,
             productID: product.productID,
             size: product.size,
@@ -83,27 +83,27 @@ var that = module.exports = {
     historyBuy: async ({
         userID
     }) => {
-        const oder = await _Oder.find({ user_id: userID }).populate('status');
-        const OderDetail = await _OderDetail.find();
+        const order = await _Order.find({ user_id: userID }).populate('status');
+        const OrderDetail = await _OrderDetail.find();
         const resultMap = {};
 
-        OderDetail.forEach((item) => {
-            const { oder_id, total } = item;
-            if (resultMap[oder_id]) {
-                resultMap[oder_id] += total;
+        OrderDetail.forEach((item) => {
+            const { order_id, total } = item;
+            if (resultMap[order_id]) {
+                resultMap[order_id] += total;
             } else {
-                resultMap[oder_id] = total;
+                resultMap[order_id] = total;
             }
         });
 
-        oder.forEach((item) => {
+        order.forEach((item) => {
             const { id } = item;
             if (resultMap[id]) {
                 item.total = resultMap[id];
             }   
         });
 
-        if (!oder) {
+        if (!order) {
             return {
                 code: 404,
                 message: 'not found'
@@ -111,7 +111,7 @@ var that = module.exports = {
         } else {
             return {
                 code: 200,
-                element: oder
+                element: order
             }
         }
     },
@@ -151,34 +151,34 @@ var that = module.exports = {
         note,
         carts
     }) => {
-        let oderID = otpGenerator.generate(6, {
+        let orderID = otpGenerator.generate(6, {
             digits: true,
             lowerCaseAlphabets: true,
             upperCaseAlphabets: false,
             specialChars: false
         });
 
-        let existingOrder = await _Oder.findOne({ otp: oderID });
+        let existingOrder = await _Order.findOne({ otp: orderID });
       
         while (existingOrder) {
-          oderID = otpGenerator.generate(6, {
+          orderID = otpGenerator.generate(6, {
             digits: true,
             lowerCaseAlphabets: true,
             upperCaseAlphabets: false,
             specialChars: false
         });
-          existingOrder = await _Oder.findOne({ otp: oderID });
+          existingOrder = await _Order.findOne({ otp: orderID });
         }
 
-        const oder = await _Oder.create({
-            oderID: oderID,
+        const order = await _Order.create({
+            orderID: orderID,
             user_id: userID,
             fullname: fullname,
             email: email,
             phone_number: phone,
             address: address,
             note: note,
-            status: '649246a5bbc25be2fda3863a',
+            status: '64d574081519606f815686b4',
             total: 0
         })
         const transformedData = await Promise.all(carts.map(async (item) => {
@@ -186,7 +186,7 @@ var that = module.exports = {
             const UpdateQuantity = product.quantity - item.quantity;
             await _Product.updateOne({ _id: item.id }, { quantity: UpdateQuantity });
             return {
-              oder_id: oder.id,
+              order_id: order.id,
               productName: product.title,
               productID: product.productID,
               size: product.size,
@@ -196,7 +196,7 @@ var that = module.exports = {
               total: item.price * item.quantity
             };
           }));
-        await _OderDetail.insertMany(transformedData)
+        await _OrderDetail.insertMany(transformedData)
     }
 
 

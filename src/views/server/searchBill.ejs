@@ -60,7 +60,7 @@
                                 </div>
                                 <div class="col-sm-9">
                                     <p>
-                                        <%= infoBill.oderID %>
+                                        <%= infoBill.orderID %>
                                     </p>
                                 </div>
                             </div>
@@ -138,7 +138,7 @@
                                 <div class="row">
                                     <div class="col-sm-12 text-center">
                                         <% if (infoBill.status.name !='Đơn hàng bị hủy' ) { %>
-                                            <a href="/server/statusOder?id=<%= infoBill._id %>&status=3" class="btn btn-danger">Hủy đơn hàng</a>
+                                            <a href="/server/statusOrder?id=<%= infoBill._id %>&status=3" class="btn btn-danger">Hủy đơn hàng</a>
                                         <% } %>
                                     </div>
                                 </div>

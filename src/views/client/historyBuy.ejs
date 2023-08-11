@@ -8,7 +8,7 @@
   <%- include('../layout/navbar.ejs'); -%>
 <div class="container">
   <h1>Lịch sử mua hàng</h1>
-  <% if(oders) { %>
+  <% if(orders) { %>
 
   <table class="table">
     <thead>
@@ -21,12 +21,12 @@
     </thead>
     <tbody>
       <!-- Dùng vòng lặp để hiển thị thông tin từng đơn hàng -->
-      <% oders.forEach(function(oder) { %>
+      <% orders.forEach(function(order) { %>
         <tr>
-          <td><%= oder.createdAt.getDate() %> / <%= oder.createdAt.getMonth() %> / <%= oder.createdAt.getFullYear() %></td>
-          <td><%= oder.oderID %></td>
-          <td><%= oder.total %></td>
-          <td><%= oder.status.name %></td>
+          <td><%= order.createdAt.getDate() %> / <%= order.createdAt.getMonth() %> / <%= order.createdAt.getFullYear() %></td>
+          <td><%= order.orderID %></td>
+          <td><%= order.total %></td>
+          <td><%= order.status.name %></td>
         </tr>
       <% }); %>
     </tbody>

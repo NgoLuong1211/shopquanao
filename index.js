@@ -3,7 +3,7 @@ const app = express();
 const path = require('path');
 const methodOverride = require('method-override')
 const createError = require('http-errors');
-const mongdb = require('./src/config/mongdb/index');
+const mongodb = require('./src/config/mongodb/index');
 const router = require('./src/router/main.route');
 const session = require('express-session');
 const store = session.MemoryStore();
@@ -96,7 +96,7 @@ passport.deserializeUser(async (id, done)=>{
   }
 })
 
-mongdb.connect();
+mongodb.connect();
 app.set('view engine', 'ejs');
 app.use(express.urlencoded({
     extended: true

@@ -3,7 +3,7 @@ const _Category = require('../models/category.model');
 const _Supplier = require('../models/supplier.model');
 const _Product = require('../models/product.model');
 const _Feedback = require('../models/feedback.model');
-const _Oder = require('../models/oder.model');
+const _Order = require('../models/order.model');
 
 const {
     revenues,
@@ -14,11 +14,11 @@ const {
 } = require('../services/productServer.services');
 
 const {
-    oder,
-    statusOder,
+    order,
+    statusOrder,
     bill,
     searchBill
-} = require('../services/oderServer.services')
+} = require('../services/orderServer.services')
 
 const {
     product
@@ -33,7 +33,7 @@ var that = module.exports = {
     revenues: async(req, res, next)=>{
         try {
             
-            const month = 7
+            const month = 8
             const data = await revenues({month});
             const labels = [];
             const amount = [];
@@ -179,40 +179,40 @@ var that = module.exports = {
             next(error);
         }
     },
-    oder: async(req, res, next) => {
+    order: async(req, res, next) => {
         try {
             const {
                 code,
                 message,
                 element
-            } = await oder({});
+            } = await order({});
             if (code != 200) {
                 return res.status(code).json(message);
             } else {
-                res.render('server/oder', {oders: element});
+                res.render('server/order', {orders: element});
             }
         } catch (error) {
             console.log(error);
             next(error);
         }
     },
-    statusOder: async(req, res, next) => {
+    statusOrder: async(req, res, next) => {
         try {
             const{
                 id,
                 status
             } = req.query
             if(status==='1'){
-                await _Oder.updateOne({_id: id}, {status: '649246cbbbc25be2fda3863b'})
+                await _Order.updateOne({_id: id}, {status: '649246cbbbc25be2fda3863b'})
             }
             if(status==='2'){
-                await statusOder({
+                await statusOrder({
                     id,
                     status
                 })
             }
             if(status==='3'){
-                await statusOder({
+                await statusOrder({
                     id,
                     status
                 })
@@ -233,7 +233,7 @@ var that = module.exports = {
             if (code != 200) {
                 return res.status(code).json(message);
             } else {
-                res.render('server/bill', {oders: element});
+                res.render('server/bill', {orders: element});
             }
         } catch (error) {
             console.log(error);

@@ -25,20 +25,20 @@
                 </thead>
                 <tbody>
                     <!-- Dùng vòng lặp để hiển thị thông tin từng đơn hàng -->
-                    <% oders.forEach(function(oder) { %>
+                    <% orders.forEach(function(order) { %>
                         <tr>
                             <td>
-                                <%= oder.createdAt.getDate() %> / <%= oder.createdAt.getMonth() %> / <%=
-                                            oder.createdAt.getFullYear() %>
+                                <%= order.createdAt.getDate() %> / <%= order.createdAt.getMonth() %> / <%=
+                                            order.createdAt.getFullYear() %>
                             </td>
                             <td>
-                                <%= oder.oderID %>
+                                <%= order.orderID %>
                             </td>
                             <td>
-                                <%= oder.total %>
+                                <%= order.total %>
                             </td>
                             <td>
-                                <%= oder.status.name %>
+                                <%= order.status.name %>
                             </td>
                         </tr>
                         <% }); %>

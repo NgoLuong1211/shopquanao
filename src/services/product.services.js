@@ -4,8 +4,8 @@ const _Category = require('../models/category.model');
 const _Supplier = require('../models/supplier.model');
 const _Size = require('../models/Size.model');
 const _Color = require('../models/Color.model')
-const _Oder = require('../models/oder.model');
-const _OderDetail = require('../models/oder_detail.model');
+const _Oder = require('../models/order.model');
+const _OderDetail = require('../models/order_detail.model');
 
 var that = module.exports = {
     productDisplay: async({

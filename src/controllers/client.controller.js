@@ -221,7 +221,6 @@ var that = module.exports = {
                 productID,
                 quantity
             } = req.query
-            // const user = req.user;
             res.render('client/checkout', { productID: productID, quantity: quantity })
         } catch (error) {
             console.log(error);
@@ -284,7 +283,7 @@ var that = module.exports = {
             if (code != 200) {
                 return res.status(code).json(message);
             } else {
-                res.render('client/historyBuy', { oders: element, user: user });
+                res.render('client/historyBuy', { orders: element, user: user });
             }
         } catch (error) {
             console.log(error);

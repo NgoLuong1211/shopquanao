@@ -2,8 +2,8 @@ const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
 
-const Oders = new Schema({
-    oderID: {type: String},
+const Orders = new Schema({
+    orderID: {type: String},
     user_id: { 
         type: String, 
         ref: 'User'
@@ -15,11 +15,11 @@ const Oders = new Schema({
     note: { type: String },
     status: {
         type: String,
-        ref: 'StatusOder'
+        ref: 'StatusOrder'
     },
     total: {type: Number},
   }, {
     timestamps: true,
 });
 
-module.exports =  mongoose.model('Oder', Oders);
+module.exports =  mongoose.model('Order', Orders);

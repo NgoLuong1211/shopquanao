@@ -5,17 +5,17 @@ const _Category = require('../models/category.model');
 const _Supplier = require('../models/supplier.model');
 const _Size = require('../models/Size.model');
 const _Color = require('../models/Color.model')
-const _Oder = require('../models/oder.model');
-const _OderDetail = require('../models/oder_detail.model');
+const _Order = require('../models/order.model');
+const _OrderDetail = require('../models/order_detail.model');
 
 var that = module.exports = {
     revenues: async ({
       month
     }) => {
       var arr = []
-      const oder = await _Oder.find({status: '649246a5bbc25be2fda3863a'});
+      const order = await _Order.find({status: '64d574081519606f815686b4'});
 
-      oder.forEach(item => {
+      order.forEach(item => {
         arr.push(item.id)
       });
         var startOfDay = new Date();
@@ -24,17 +24,17 @@ var that = module.exports = {
         var endOfDay = new Date();
         endOfDay.setHours(23, 59, 59, 999);
 
-        const oder_detail = await _OderDetail.find({
+        const order_detail = await _OrderDetail.find({
             createdAt: {
                 $gte: startOfDay,
                 $lte: endOfDay
               },
-              oder_id: { $nin: arr }
+              order_id: { $nin: arr }
         })
         var sum = 0;
-        if(oder_detail){
-          for (var i = 0; i < oder_detail.length; i++) {
-            sum += oder_detail[i].price*oder_detail[i].quantity;
+        if(order_detail){
+          for (var i = 0; i < order_detail.length; i++) {
+            sum += order_detail[i].price*order_detail[i].quantity;
           }
         }
 
