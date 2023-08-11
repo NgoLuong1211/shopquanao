@@ -34,8 +34,7 @@ app.use(session({
 app.use(cookieParser());
 
 app.use(passport.initialize());
-app.use(passport.session());
-// veryfy.login();
+app.use(passport.session());;
 
 passport.use(new LocalStrategy({
   usernameField: 'email',
@@ -109,24 +108,18 @@ app.use(express.static(
 
     app.use((req, res, next) => {
       if (req.url === '/favicon.ico') {
-        // Chuyển hướng yêu cầu favicon.ico
         res.status(204).end();
       } else {
-        // Tiếp tục xử lý các yêu cầu khác
         next();
       }
     });
 
 router(app);
 
-//error Handling Middleware called
 app.use((req, res, next) => {
-  // const error = new Error("Not found");
-  // error.status = 404;
   next(createError(404, "Not found"));
 });
-
-//error handler Middleware 
+ 
 app.use((error, req, res, next) => {
   res.status(error.status || 500).send({
     error: {
